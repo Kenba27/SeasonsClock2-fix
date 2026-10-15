@@ -1,0 +1,6 @@
+name: SeasonsClock
+version: '1.0.0'
+main: vn.seasonsclock.SeasonsClock
+api-version: '26.2'
+description: Countdown and calendar placeholders for SeasonsPlus
+depend: [Seasons, PlaceholderAPI]

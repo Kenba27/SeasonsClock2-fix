@@ -1,0 +1,140 @@
+# ===================== LICH + MUA (theo ngay trong game) =====================
+# 1 ngay game = 20 phut that. Nguoi choi ngu qua dem thi ngay do nhay luon sang ngay moi.
+# SeasonsClock tu dong dieu khien mua cua SeasonsPlus, season-duration trong Seasons/config.yml khong con tac dung.
+
+# 30 ngay = 1 thang, 3 thang = 1 mua (=> 90 ngay game = 1 mua, 12 thang = 1 nam)
+days-per-month: 30
+months-per-season: 3
+
+# Nam bat dau
+start-year: 1
+
+# Ten the gioi dung de tinh ngay. De trong = the gioi chinh.
+world: ""
+
+# false = lich bat dau tu mua Xuan, ngay 1/1 vao luc plugin chay lan dau.
+# true  = tinh tu ngay dau tien cua the gioi (ngay 0).
+# De dat lai lich: xoa file plugins/SeasonsClock/data.yml roi restart.
+start-from-world-start: false
+
+# Dinh dang ngay: %seasonclock_date% va %seasonclock_fulldate%
+# Dung duoc: {day} {month} {year} {monthname}
+date-format: "{day}/{month}/{year}"
+full-date-format: "Ngày {day} {monthname} Năm {year}"
+
+# Dinh dang cho %seasonclock_timeleft% (so ngay game con lai cua mua)
+time-left-format: "Còn {days} ngày"
+
+# Ten thang (theo thu tu thang 1, 2, 3...). %seasonclock_monthname%
+month-names:
+  - "Tháng Một"
+  - "Tháng Hai"
+  - "Tháng Ba"
+  - "Tháng Tư"
+  - "Tháng Năm"
+  - "Tháng Sáu"
+  - "Tháng Bảy"
+  - "Tháng Tám"
+  - "Tháng Chín"
+  - "Tháng Mười"
+  - "Tháng Mười Một"
+  - "Tháng Mười Hai"
+
+# ===================== THONG BAO DOI MUA =====================
+announcements:
+  enabled: true
+  seasons:
+    SPRING:
+      title: "&a❀ Mùa Xuân"
+      subtitle: "&7Cây cối nảy mầm, trời ấm dần"
+      message: "&a❀ Mùa Xuân đã đến! Thời tiết ấm lên, hoa lá đua nở."
+    SUMMER:
+      title: "&6☀ Mùa Hè"
+      subtitle: "&7Nắng gắt, hãy giữ mình mát mẻ"
+      message: "&6☀ Mùa Hè đã đến! Trời rất nóng, nhớ tìm bóng mát và nước."
+    AUTUMN:
+      title: "&c❧ Mùa Thu"
+      subtitle: "&7Lá vàng rơi, trời se lạnh"
+      message: "&c❧ Mùa Thu đã đến! Lá bắt đầu rụng, trời mát dần."
+    WINTER:
+      title: "&b❄ Mùa Đông"
+      subtitle: "&7Tuyết phủ, hãy giữ ấm"
+      message: "&b❄ Mùa Đông đã đến! Trời rất lạnh, hãy tìm lửa và mặc thêm giáp."
+
+# ===================== HIEU UNG NONG / LANH THEO GIAI DOAN =====================
+# Nhiet do tinh theo do C. Moi giai doan co: temp (nguong), message (gui 1 lan khi buoc vao giai doan),
+# effects (danh sach hieu ung dang "ten:cap", cap 0 = cap I, 1 = cap II...).
+# Nong: giai doan co temp cao nhat ma nhiet do dat toi se duoc ap dung.
+# Lanh: giai doan co temp thap nhat ma nhiet do xuong toi se duoc ap dung.
+# Ten hieu ung theo Minecraft: nausea, weakness, mining_fatigue, blindness, darkness, slowness, hunger...
+# Hieu ung co san cua SeasonsPlus (cham, chay, doi, chet coc) van chay theo heat-effect-threshold / cold-effect-threshold.
+thermal-effects:
+  enabled: true
+  duration-ticks: 100
+  heat:
+    stages:
+      warm:
+        temp: 35
+        message: "&e☀ Trời bắt đầu nóng bức."
+        effects: []
+      hot:
+        temp: 40
+        message: "&6☀ Bạn đổ mồ hôi nhiều, hãy tìm bóng mát hoặc xuống nước."
+        effects:
+          - "weakness:0"
+      heatstroke:
+        temp: 45
+        message: "&c☀ Bạn bị say nắng! Đầu óc choáng váng."
+        effects:
+          - "nausea:0"
+          - "weakness:0"
+      extreme:
+        temp: 50
+        message: "&4☀ Nguy hiểm! Bạn sắp ngất vì nóng."
+        effects:
+          - "nausea:1"
+          - "weakness:1"
+          - "darkness:0"
+  cold:
+    stages:
+      cool:
+        temp: 10
+        message: "&b❄ Trời bắt đầu se lạnh."
+        effects: []
+      cold:
+        temp: 5
+        message: "&b❄ Bạn run lên vì lạnh."
+        effects:
+          - "mining_fatigue:0"
+      freezing:
+        temp: 0
+        message: "&9❄ Bạn đang bị lạnh cóng!"
+        effects:
+          - "weakness:0"
+          - "mining_fatigue:0"
+      extreme:
+        temp: -10
+        message: "&1❄ Nguy hiểm! Bạn sắp chết cóng."
+        effects:
+          - "weakness:1"
+          - "mining_fatigue:1"
+          - "darkness:0"
+
+# ===================== HAT LA ROI / TUYET ROI =====================
+# Mua Thu: la roi tu tan cay (chi o cho co cay). Mua Dong: tuyet roi o noi troi thoang (khong roi o bioem nong nhu sa mac).
+# particle: ten hat theo Minecraft. Neu khong co hat "tinted_leaves", doi thanh vi du "cherry_leaves".
+particles:
+  enabled: true
+  interval-ticks: 10
+  radius: 14
+  autumn:
+    particle: "tinted_leaves"
+    samples-per-run: 4
+    colors:
+      - "#D2691E"
+      - "#B22222"
+      - "#FF8C00"
+      - "#DAA520"
+  winter:
+    particle: "snowflake"
+    flakes-per-run: 12
